@@ -1,28 +1,53 @@
-/* tipos de dados primitivos
-
-int	Números inteiros	int idade = 25;
-float	Números reais com menos precisão	float peso = 70.5;
-double	Números reais com mais precisão	double pi = 3.141592;
-char	Um único caractere	char letra = 'A';
-
-Variaveis
-São nomes simbólicos para armazenar dados em memória. Ex:
-
-int idade = 30;
-char letra = 'B';
-
-Arrays (vetores):
-Estruturas que armazenam vários valores do mesmo tipo, acessíveis por índice (iniciando do 0). Ex:
-
-int numeros[5] = {10, 20, 30, 40, 50};
-printf("%d", numeros[2]);  // imprime 30
-
-*/
-
 #include <stdio.h>
+#include <string.h>
 
-int main()
-{
-    /* code */
+int main() {
+    char nomeProduto[50];
+    int quantidade, numProdutos;
+    float preco, totalProduto, totalDia;
+    char continuar;
+
+    do {
+        totalDia = 0;
+        printf("\n--- Registro de Vendas do Dia ---\n");
+        printf("Quantos produtos diferentes foram vendidos hoje? ");
+        scanf("%d", &numProdutos);
+
+        for (int i = 1; i <= numProdutos; i++) {
+            printf("\nProduto %d:\n", i);
+
+            printf("Nome do produto: ");
+            scanf(" %[^\n]s", nomeProduto); // Ler string com espaços
+
+            printf("Quantidade vendida: ");
+            scanf("%d", &quantidade);
+
+            if (quantidade <= 0) {
+                printf("Quantidade inválida. Ignorando produto.\n");
+                continue;
+            }
+
+            printf("Preço unitário: R$ ");
+            scanf("%f", &preco);
+
+            if (preco < 0) {
+                printf("Preço inválido. Ignorando produto.\n");
+                continue;
+            }
+
+            totalProduto = quantidade * preco;
+            printf("Total do produto %s: R$ %.2f\n", nomeProduto, totalProduto);
+
+            totalDia += totalProduto;
+        }
+
+        printf("\nTotal geral de vendas do dia: R$ %.2f\n", totalDia);
+
+        printf("\nDeseja registrar outro dia de vendas? (s/n): ");
+        scanf(" %c", &continuar);
+
+    } while (continuar == 's' || continuar == 'S');
+
+    printf("\nEncerrando o sistema de vendas.\n");
     return 0;
 }
